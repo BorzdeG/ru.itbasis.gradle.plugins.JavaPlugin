@@ -1,0 +1,74 @@
+buildscript {
+	repositories {
+		maven { url 'https://plugins.gradle.org/m2/' }
+	}
+	dependencies {
+		classpath 'com.gradle.publish:plugin-publish-plugin:0.9.7'
+	}
+}
+
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'com.gradle.plugin-publish'
+
+repositories {
+	jcenter()
+}
+
+configurations.all {
+	resolutionStrategy {
+		failOnVersionConflict()
+
+//		force 'org.spockframework:spock-core:latest.release'
+	}
+}
+
+dependencies {
+	compile gradleApi()
+
+	testCompile gradleTestKit()
+	testCompile 'junit:junit:latest.release'
+//	testCompile('org.spockframework:spock-core') {
+//		exclude group: 'org.codehaus.groovy'
+//	}
+//	testCompile('com.energizedwork:spock-extensions:latest.release') { exclude group: 'org.codehaus.groovy' }
+}
+
+group = 'ru.itbasis.gradle.plugins'
+
+version = '0.3'
+
+ext {
+	compatibilityVersion = '1.7'
+}
+
+sourceCompatibility = compatibilityVersion
+targetCompatibility = compatibilityVersion
+
+idea.project {
+	jdkName = compatibilityVersion
+	languageLevel = compatibilityVersion
+}
+
+pluginBundle {
+	website = 'https://github.com/BorzdeG/ru.itbasis.gradle.plugins.JavaPlugin'
+	vcsUrl = 'https://github.com/BorzdeG/ru.itbasis.gradle.plugins.JavaPlugin.git'
+
+	description = 'Gradle Java plugin base configure Checkstyle and Lombok'
+
+	mavenCoordinates {
+		groupId = project.group
+		artifactId = 'java-plugin'
+		version = project.version
+	}
+
+	plugins {
+		javaModulePlugin {
+			id = project.group + '.java-module'
+			displayName = 'Including Lombok dependency and configure Checkstyle'
+			tags = ['java', 'lombok', 'checkstyle']
+			version = project.version
+		}
+	}
+}

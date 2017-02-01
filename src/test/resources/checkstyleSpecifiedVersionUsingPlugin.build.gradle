@@ -1,0 +1,13 @@
+plugins {
+	id 'ru.itbasis.gradle.plugins.java-module'
+}
+repositories {
+	jcenter()
+}
+ext {
+	javaVersion = JavaVersion.VERSION_1_8
+}
+apply plugin: 'checkstyle'
+checkstyle {
+	toolVersion = '7.4'
+}

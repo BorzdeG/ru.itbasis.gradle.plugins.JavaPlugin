@@ -1,0 +1,10 @@
+plugins {
+	id 'ru.itbasis.gradle.plugins.java-module'
+}
+repositories {
+	jcenter()
+}
+ext {
+	javaVersion = JavaVersion.VERSION_1_8
+	lombokVersion = '1.16.6'
+}

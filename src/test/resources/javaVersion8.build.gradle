@@ -1,0 +1,9 @@
+plugins {
+	id 'ru.itbasis.gradle.plugins.java-module'
+}
+ext {
+	javaVersion = JavaVersion.VERSION_1_8
+}
+project.afterEvaluate {
+	logger.lifecycle('java.version: ' + compileJava.sourceCompatibility)
+}
