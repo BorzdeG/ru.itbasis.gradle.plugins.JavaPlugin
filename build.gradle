@@ -19,8 +19,6 @@ repositories {
 configurations.all {
 	resolutionStrategy {
 		failOnVersionConflict()
-
-//		force 'org.spockframework:spock-core:latest.release'
 	}
 }
 
@@ -29,10 +27,6 @@ dependencies {
 
 	testCompile gradleTestKit()
 	testCompile 'junit:junit:latest.release'
-//	testCompile('org.spockframework:spock-core') {
-//		exclude group: 'org.codehaus.groovy'
-//	}
-//	testCompile('com.energizedwork:spock-extensions:latest.release') { exclude group: 'org.codehaus.groovy' }
 }
 
 group = 'ru.itbasis.gradle.plugins'

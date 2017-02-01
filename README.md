@@ -12,6 +12,9 @@
 * [Java 8](src/test/resources/javaVersion8.build.gradle)
 
 ##### Checkstyle configurations
+
+default configuration path: `${rootPath}/config/checkstyle.xml`
+
 * [Checkstyle latest version](src/test/resources/checkstyleLatestVersion.build.gradle)
 * [Checkstyle specified version](src/test/resources/checkstyleSpecifiedVersion.build.gradle)
 * [Checkstyle specified version (Use checkstyle extension)](src/test/resources/checkstyleSpecifiedVersionUsingPlugin.build.gradle)
