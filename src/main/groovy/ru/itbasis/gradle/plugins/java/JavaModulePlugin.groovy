@@ -39,7 +39,7 @@ class JavaModulePlugin implements Plugin<ProjectInternal> {
 			throw new InvalidUserDataException(EXCEPTION_NOT_FOUND_JAVA_VERSION)
 		}
 
-		final JavaVersion javaVersion = JavaVersion.toVersion(project.property(PROPERTY_JAVA_VERSION));
+		final JavaVersion javaVersion = JavaVersion.toVersion(project.property(PROPERTY_JAVA_VERSION))
 
 		project.tasks.withType(JavaCompile) { task ->
 			task.sourceCompatibility = javaVersion.toString()
@@ -61,7 +61,7 @@ class JavaModulePlugin implements Plugin<ProjectInternal> {
 		project.plugins.apply(CheckstylePlugin)
 
 		final checkstyleExtension = project.extensions.getByType(CheckstyleExtension)
-		checkstyleExtension.toolVersion = project.properties[PROPERTY_CHECKSTYLE_VERSION] ?: VERSION_LATEST_RELEASE
+		checkstyleExtension.toolVersion = (project.properties[PROPERTY_CHECKSTYLE_VERSION] ?: VERSION_LATEST_RELEASE) as String
 		checkstyleExtension.configFile = project.rootProject.file('config/checkstyle.xml')
 		checkstyleExtension.showViolations = true
 	}
