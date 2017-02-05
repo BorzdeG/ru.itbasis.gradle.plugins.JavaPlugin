@@ -2,15 +2,17 @@ buildscript {
 	repositories {
 		maven { url 'https://plugins.gradle.org/m2/' }
 	}
-	dependencies {
-		classpath 'com.gradle.publish:plugin-publish-plugin:0.9.7'
-	}
 }
 
-apply plugin: 'groovy'
-apply plugin: 'idea'
-apply plugin: 'java-gradle-plugin'
-apply plugin: 'com.gradle.plugin-publish'
+plugins {
+	id 'groovy'
+	id 'idea'
+	id 'java-gradle-plugin'
+	id 'com.gradle.plugin-publish' version '0.9.7'
+	id 'maven'
+	id 'maven-publish'
+	id 'signing'
+}
 
 repositories {
 	jcenter()
@@ -29,38 +31,65 @@ dependencies {
 	testCompile 'junit:junit:latest.release'
 }
 
-group = 'ru.itbasis.gradle.plugins'
-
-version = '0.3'
-
 ext {
-	compatibilityVersion = '1.7'
+	javaVersion = '1.7'
 }
 
-sourceCompatibility = compatibilityVersion
-targetCompatibility = compatibilityVersion
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+publishPlugins.dependsOn check
+publish.dependsOn check
 
 idea.project {
-	jdkName = compatibilityVersion
-	languageLevel = compatibilityVersion
+	languageLevel = javaVersion
+}
+
+task sourceJar(type: Jar, group: 'build') {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task testsJar(type: Jar, group: 'build') {
+	classifier = 'test-sources'
+	from sourceSets.test.allSource
+}
+
+artifacts {
+	archives jar, sourceJar, testsJar
+}
+
+signing {
+	sign configurations.archives
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+
+			artifact sourceJar
+			artifact testsJar
+		}
+	}
 }
 
 pluginBundle {
-	website = 'https://github.com/BorzdeG/ru.itbasis.gradle.plugins.JavaPlugin'
-	vcsUrl = 'https://github.com/BorzdeG/ru.itbasis.gradle.plugins.JavaPlugin.git'
+	website = project.url
+	vcsUrl = project.url + '.git'
 
-	description = 'Gradle Java plugin base configure Checkstyle and Lombok'
+	description = project.description
 
 	mavenCoordinates {
 		groupId = project.group
-		artifactId = 'java-plugin'
+		artifactId = project.name
 		version = project.version
 	}
 
 	plugins {
 		javaModulePlugin {
-			id = project.group + '.java-module'
-			displayName = 'Including Lombok dependency and configure Checkstyle'
+			id = project.group + '.' + project.name
+			displayName = project.description
 			tags = ['java', 'lombok', 'checkstyle']
 			version = project.version
 		}
