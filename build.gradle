@@ -9,9 +9,7 @@ plugins {
 	id 'idea'
 	id 'java-gradle-plugin'
 	id 'com.gradle.plugin-publish' version '0.9.7'
-	id 'maven'
 	id 'maven-publish'
-	id 'signing'
 }
 
 repositories {
@@ -57,10 +55,6 @@ task testsJar(type: Jar, group: 'build') {
 
 artifacts {
 	archives jar, sourceJar, testsJar
-}
-
-signing {
-	sign configurations.archives
 }
 
 publishing {
