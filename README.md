@@ -1,5 +1,9 @@
 # Java Module plugin
 
+## License
+
+GNU Lesser General Public License v3 (LGPLv3)
+
 ## Intention
 
 1. Simple configure JVM version
@@ -24,3 +28,4 @@ default configuration path: `${rootPath}/config/checkstyle.xml` (If the file is 
 * [Lombok latest version](src/test/resources/lombokLatestVersion.build.gradle)
 * [Lombok specified version](src/test/resources/lombokSpecifiedVersion.build.gradle)
 * [disable Checkstyle](src/test/resources/lombokDisabled.build.gradle)
+
