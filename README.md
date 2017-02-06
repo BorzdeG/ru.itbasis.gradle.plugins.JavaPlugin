@@ -13,7 +13,7 @@
 
 ##### Checkstyle configurations
 
-default configuration path: `${rootPath}/config/checkstyle.xml`
+default configuration path: `${rootPath}/config/checkstyle.xml` (If the file is not found in the specified path, the plugin "checkstyle" not applicable)
 
 * [Checkstyle latest version](src/test/resources/checkstyleLatestVersion.build.gradle)
 * [Checkstyle specified version](src/test/resources/checkstyleSpecifiedVersion.build.gradle)
