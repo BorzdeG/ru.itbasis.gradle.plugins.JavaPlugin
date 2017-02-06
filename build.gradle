@@ -38,6 +38,7 @@ targetCompatibility = javaVersion
 
 publishPlugins.dependsOn check
 publish.dependsOn check
+publishToMavenLocal.dependsOn check
 
 idea.project {
 	languageLevel = javaVersion

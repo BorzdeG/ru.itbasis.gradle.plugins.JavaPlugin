@@ -1,5 +1,5 @@
 plugins {
-	id 'ru.itbasis.gradle.plugins.java-module'
+	id 'ru.itbasis.gradle.plugins.java-plugin'
 }
 repositories {
 	jcenter()
