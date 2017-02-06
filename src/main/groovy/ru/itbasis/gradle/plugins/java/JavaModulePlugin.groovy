@@ -16,11 +16,27 @@ class JavaModulePlugin implements Plugin<ProjectInternal> {
 
 	@Override
 	void apply(ProjectInternal project) {
+		configurateResolutions(project)
+
+		project.repositories {
+			mavenLocal()
+			jcenter()
+		}
+
 		project.afterEvaluate({
 			applyJava(project)
 			CheckstyleInjector.applyCheckStyle(project)
 			LombokInjector.applyLombok(project)
 		})
+	}
+
+	private static configurateResolutions(ProjectInternal project) {
+		project.configurations.all {
+			resolutionStrategy {
+				failOnVersionConflict()
+			}
+		}
+
 	}
 
 	private static void applyJava(ProjectInternal project) {
