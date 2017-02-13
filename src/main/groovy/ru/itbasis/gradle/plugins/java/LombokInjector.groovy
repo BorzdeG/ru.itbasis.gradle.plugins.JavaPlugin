@@ -16,7 +16,7 @@ class LombokInjector {
 
 		final String lombokVersion = project.properties[PROPERTY_LOMBOK_VERSION] ?: JavaModulePlugin.VERSION_LATEST_RELEASE
 		project.dependencies {
-			compileOnly 'org.projectlombok:lombok:' + lombokVersion
+			compile('org.projectlombok:lombok:' + lombokVersion)
 		}
 	}
 

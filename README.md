@@ -1,9 +1,5 @@
 # Java Module plugin
 
-## License
-
-GNU Lesser General Public License v3 (LGPLv3)
-
 ## Intention
 
 1. Simple configure JVM version

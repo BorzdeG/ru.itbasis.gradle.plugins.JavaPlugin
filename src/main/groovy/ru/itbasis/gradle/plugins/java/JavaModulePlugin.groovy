@@ -21,22 +21,30 @@ class JavaModulePlugin implements Plugin<ProjectInternal> {
 		project.repositories {
 			mavenLocal()
 			jcenter()
+			mavenCentral()
 		}
 
 		project.afterEvaluate({
 			applyJava(project)
 			CheckstyleInjector.applyCheckStyle(project)
 			LombokInjector.applyLombok(project)
+
+			project.dependencies {
+				testCompile('org.powermock:powermock-module-junit4:latest.release')
+				testCompile('org.powermock:powermock-module-junit4-rule:latest.release')
+			}
 		})
+
 	}
 
 	private static configurateResolutions(ProjectInternal project) {
 		project.configurations.all {
-			resolutionStrategy {
+			resolutionStrategy{
 				failOnVersionConflict()
+
+				force 'org.objenesis:objenesis:latest.release'
 			}
 		}
-
 	}
 
 	private static void applyJava(ProjectInternal project) {
