@@ -4,6 +4,9 @@ plugins {
 ext {
 	javaVersion = JavaVersion.VERSION_1_7
 }
+dependencies {
+	compile('javax.validation:validation-api:latest.release')
+}
 project.afterEvaluate {
 	logger.lifecycle('java.version: ' + compileJava.sourceCompatibility)
 }

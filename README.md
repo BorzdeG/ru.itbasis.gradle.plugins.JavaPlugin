@@ -8,8 +8,10 @@
 
 ## Sample configurations
 ##### JVM configurations
-* [Java 7](src/test/resources/javaVersion7.build.gradle)
-* [Java 8](src/test/resources/javaVersion8.build.gradle)
+using JVM target version if not set property 'javaVersion'
+
+* [set Java 7](src/test/resources/javaVersion7.build.gradle)
+* [set Java 8](src/test/resources/javaVersion8.build.gradle)
 
 ##### Checkstyle configurations
 

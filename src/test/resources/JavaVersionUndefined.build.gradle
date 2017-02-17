@@ -1,3 +1,0 @@
-plugins {
-	id 'ru.itbasis.gradle.plugins.java-plugin'
-}

@@ -35,13 +35,6 @@ class JavaModulePluginTest {
 	}
 
 	@Test
-	void testUndefinedJavaVersionProperty() {
-		copyTestBuildScript('JavaVersionUndefined.build.gradle')
-		final result = gradleRunner.withArguments('build').buildAndFail()
-		Assert.assertTrue(result.output.contains(JavaModulePlugin.EXCEPTION_NOT_FOUND_JAVA_VERSION))
-	}
-
-	@Test
 	void testJavaVersion7() throws Exception {
 		copyTestBuildScript('javaVersion7.build.gradle')
 		final result = gradleRunner.withArguments('build').build()
