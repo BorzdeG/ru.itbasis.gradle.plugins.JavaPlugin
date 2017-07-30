@@ -2,91 +2,119 @@ buildscript {
 	repositories {
 		maven { url 'https://plugins.gradle.org/m2/' }
 	}
+	dependencies {
+		classpath 'com.gradle.publish:plugin-publish-plugin:0.9.7'
+		classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+		classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.9.0'
+	}
 }
 
-plugins {
-	id 'groovy'
-	id 'idea'
-	id 'java-gradle-plugin'
-	id 'com.gradle.plugin-publish' version '0.9.7'
-	id 'maven-publish'
-}
+apply plugin: 'groovy'
 
 repositories {
 	jcenter()
 }
 
 configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+		if (details.requested.name == 'groovy-all') {
+			details.useVersion(GroovySystem.version)
+		}
+	}
+
 	resolutionStrategy {
 		failOnVersionConflict()
 	}
 }
 
 dependencies {
-	compile gradleApi()
-
-	testCompile gradleTestKit()
 	testCompile 'junit:junit:latest.release'
 }
 
 ext {
-	javaVersion = '1.7'
+	javaVersion = JavaVersion.VERSION_1_7
 }
 
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
 
-publishPlugins.dependsOn check
-publish.dependsOn check
-publishToMavenLocal.dependsOn check
+if (project == rootProject) {
+	apply plugin: 'idea'
+	apply plugin: 'java-gradle-plugin'
+	apply plugin: 'com.gradle.plugin-publish'
+	apply plugin: 'com.bmuschko.nexus'
+	apply plugin: 'io.codearte.nexus-staging'
 
-idea.project {
-	languageLevel = javaVersion
-}
+	uploadArchives.dependsOn check
+	closeRepository.dependsOn uploadArchives
+	publishPlugins.dependsOn 'sign', 'releaseRepository'
 
-task sourceJar(type: Jar, group: 'build') {
-	classifier = 'sources'
-	from sourceSets.main.allSource
-}
-
-task testsJar(type: Jar, group: 'build') {
-	classifier = 'test-sources'
-	from sourceSets.test.allSource
-}
-
-artifacts {
-	archives jar, sourceJar, testsJar
-}
-
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-
-			artifact sourceJar
-			artifact testsJar
+	idea {
+		project {
+			languageLevel = javaVersion
+		}
+		module {
+			downloadJavadoc = false
+			downloadSources = false
 		}
 	}
-}
 
-pluginBundle {
-	website = project.url
-	vcsUrl = project.url + '.git'
-
-	description = project.description
-
-	mavenCoordinates {
-		groupId = project.group
-		artifactId = project.name
-		version = project.version
+	nexusStaging {
+		packageGroup = 'ru.itbasis'
 	}
 
-	plugins {
-		javaModulePlugin {
-			id = project.group + '.' + project.name
-			displayName = project.description
-			tags = ['java', 'lombok', 'checkstyle']
+	modifyPom {
+		project {
+			description = project.description
+			url = project.url
+			name = project.name
+			licenses {
+				license {
+					name = 'MIT License'
+					url = project.url + '/blob/master/LICENSE'
+					distribution = 'repo'
+				}
+			}
+			issueManagement {
+				system = 'GitHub Issues'
+				url = project.url + '/issues'
+			}
+			scm {
+				connection = project.scmUrl
+				developerConnection = project.scmUrl
+				tag = project.version
+				url = project.url
+			}
+			developers {
+				developer {
+					id = 'owner'
+					name = 'Victor Alenkov'
+					email = 'Victor@Alenkov.name'
+					timezone = 'UTC+3'
+				}
+			}
+		}
+	}
+
+	pluginBundle {
+		website = project.url
+		vcsUrl = project.url
+		description = project.description
+
+		mavenCoordinates {
+			groupId = project.group
+			artifactId = project.name
 			version = project.version
+			url = project.url
+		}
+
+		plugins {
+			javaModuleGradlePlugin {
+				id = project.group + '.' + project.name
+				displayName = project.description
+				tags = ['java', 'lombok', 'checkstyle']
+				version = project.version
+			}
 		}
 	}
 }

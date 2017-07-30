@@ -1,5 +1,5 @@
 plugins {
-	id 'ru.itbasis.gradle.plugins.java-plugin'
+	id 'ru.itbasis.gradle.plugins.java-module-gradle-plugin'
 }
 ext {
 	javaVersion = JavaVersion.VERSION_1_8
