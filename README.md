@@ -1,4 +1,5 @@
 # Java Module plugin
+[![Build status](https://travis-ci.org/itbasis/java-module-gradle-plugin.svg?branch=master)](https://travis-ci.org/itbasis/java-module-gradle-plugin)
 
 ## Intention
 
