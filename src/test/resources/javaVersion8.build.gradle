@@ -1,6 +1,9 @@
 plugins {
 	id 'ru.itbasis.gradle.plugins.java-module-gradle-plugin'
 }
+repositories {
+	jcenter()
+}
 ext {
 	javaVersion = JavaVersion.VERSION_1_8
 }

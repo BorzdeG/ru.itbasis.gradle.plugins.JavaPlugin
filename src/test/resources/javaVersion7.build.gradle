@@ -4,6 +4,9 @@ plugins {
 ext {
 	javaVersion = JavaVersion.VERSION_1_7
 }
+repositories {
+	jcenter()
+}
 dependencies {
 	compile('javax.validation:validation-api:latest.release')
 }

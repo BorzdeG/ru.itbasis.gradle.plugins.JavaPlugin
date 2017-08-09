@@ -19,13 +19,6 @@ class JavaModulePlugin implements Plugin<ProjectInternal> {
 		project.plugins.apply(JavaPlugin)
 		configurateResolutions(project)
 
-		project.configure(project) {
-			project.repositories {
-				mavenLocal()
-				jcenter()
-			}
-		}
-
 		project.afterEvaluate({
 			applyJava(project)
 			CheckstyleInjector.applyCheckStyle(project)
